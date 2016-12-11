@@ -6,7 +6,9 @@
   "author": "Divan Visagie",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js --exec babel-node --presets es2015,stage-2"
+    "start": "nodemon index.js --exec babel-node --presets es2015,stage-2",
+    "test": "mocha **/**/*.spec.js --reporter nyan --ui bdd --watch",
+    "test-ci": "mocha **/**/*.spec.js --reporter spec"
   },
   "dependencies": {
     "chai": "^3.5.0",
