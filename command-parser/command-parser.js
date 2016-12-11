@@ -1,7 +1,7 @@
 'use strict'
 
 import Fuse from 'fuse.js'
-
+import nlp from 'nlp_compromise'
 
 function getMatchingItemFor(searchTerm, sampleList) {
   var fuse = new Fuse(sampleList, {
@@ -19,15 +19,24 @@ function getMatchingItemFor(searchTerm, sampleList) {
 
 function getCommandForText(textMessage) {
 
-  const sampleList = [
-    { name: 'ON' },
-    { name: 'OFF' }
-  ]
+  var nouns = nlp.sentence(textMessage).nouns()
 
-  const match = getMatchingItemFor(textMessage, sampleList)
-  console.log(match)
+  console.log(textMessage,nouns)
+  if (nouns.length === 0) {
+    console.log('the old ways')
+    const sampleList = [
+      { name: 'ON' },
+      { name: 'OFF' }
+    ]
+    const match = getMatchingItemFor(textMessage, sampleList)
+    return match[0].name
+  }
 
-  return match[0].name
+  return {
+    command: nouns[0].normal.toUpperCase(),
+    value: nlp.value(textMessage).number
+  }
+  return 'ON'
 }
 
 

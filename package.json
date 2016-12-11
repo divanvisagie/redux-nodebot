@@ -16,6 +16,7 @@
     "fuse.js": "^2.6.1",
     "johnny-five": "^0.10.6",
     "mocha": "^3.2.0",
+    "nlp_compromise": "^6.5.3",
     "redux": "^3.6.0"
   },
   "devDependencies": {
