@@ -1,6 +1,6 @@
 'use strict'
 
-const expect = require('chai').expect
+import { expect } from 'chai'
 
 describe('default test to make sure tests are working', () => {
   it('should always pass', () => {
