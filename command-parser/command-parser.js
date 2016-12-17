@@ -32,7 +32,7 @@ function trainingObject(input, output){
   }
 }
 messageClassifier.trainBatch([
-  trainingObject('turn the light on', 'COMMAND'),
+  trainingObject('turn the oven on', 'COMMAND'),
   trainingObject('set the speed to 50', 'SETTING'),
 ]);
 
@@ -76,8 +76,9 @@ function processSentenceToObject(textMessage) {
 
 const actionClassifier = createTextClassifier();
 actionClassifier.trainBatch([
-  trainingObject('turn off', 'OFF'),
-  trainingObject('turn on','ON')
+  trainingObject('call off', 'OFF'),
+  trainingObject('call on','ON'),
+  trainingObject('call toggle','TOGGLE')
 ])
 
 function getCommandForText(textMessage) {
@@ -91,21 +92,22 @@ function getCommandForText(textMessage) {
   if (tags[0] == 'SETTING') {
     // console.log(tags,'--->>>>')
     const nouns = nlp.sentence(textMessage).nouns()
+    const key = nouns[0].normal.toLowerCase()
     const returnObject = {
-      command: nouns[0].normal.toUpperCase(),
-      value: nlp.value(textMessage).number
+      command: nouns[0].normal.toUpperCase()
     }
+    returnObject[key] = nlp.value(textMessage).number
     // console.log('>>',returnObject)
     return returnObject
   } else {
     const verb = nlp.verb(textMessage)
     const actionTags = actionClassifier.classify(textMessage)
-    if (actionTags[0] === 'OFF'){
-      return { command: 'OFF' }
+    if (actionTags[0]){
+      return { command: actionTags[0] }
     }
   }
 
-  return { command: 'ON' }
+  return { command: 'UNRECOGNISED' }
   
 }
 

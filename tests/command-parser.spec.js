@@ -22,12 +22,21 @@ describe('command-parser', () => {
     })
   })
 
+  describe('given "toggle the light" text command', () => {
+    it('should return the "TOGGLE" command', () => {
+      const command = commandParser.getCommandForText('toggle the light')
+      expect(command).to.deep.equal({
+        command: 'TOGGLE'
+      })
+    })
+  })
+
   describe('given "set the brightness to 50"', () => {
     it(`should return { command: 'BRIGHTNESS', value: 50 }`, () => {
       const command = commandParser.getCommandForText('set the brightness to 50')
       expect(command).to.deep.equal({
         command: 'BRIGHTNESS',
-        value: 50
+        brightness: 50
       })
     })
   })
