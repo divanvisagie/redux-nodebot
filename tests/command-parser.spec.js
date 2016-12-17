@@ -7,14 +7,18 @@ describe('command-parser', () => {
   describe('given "turn on the light" text command', () => {
     it('should return the "ON" command', () => {
       const command = commandParser.getCommandForText('turn on the light')
-      expect(command).to.equal('ON')
+      expect(command).to.deep.equal({
+        command: 'ON'
+      })
     })
   })
 
   describe('given "turn off the light" text command', () => {
     it('should return the "OFF" command', () => {
       const command = commandParser.getCommandForText('turn off the light')
-      expect(command).to.equal('OFF')
+      expect(command).to.deep.equal({
+        command: 'OFF'
+      })
     })
   })
 
@@ -28,13 +32,4 @@ describe('command-parser', () => {
     })
   })
 
-  describe('given "pulse every 500 milliseconds"', () => {
-    it(`should return { command: 'PULSE', value: 500 }`, () => {
-      const command = commandParser.getCommandForText('pulse every 500 milliseconds')
-      expect(command).to.deep.equal({
-        command: 'PULSE',
-        value: 500
-      })
-    })
-  })
 })
